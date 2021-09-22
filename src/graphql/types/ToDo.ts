@@ -1,4 +1,4 @@
-import { objectType, extendType } from "nexus";
+import { objectType, extendType, list } from "nexus";
 
 export const ToDo = objectType({
   name: "ToDo",
@@ -21,6 +21,17 @@ export const Query = extendType({
           return null;
         }
         return context.prisma.toDo.findFirst({
+          where: { authorId: context.session?.user.id },
+        });
+      },
+    });
+    t.field("todoList", {
+      type: list("ToDo"),
+      resolve(root, args, context) {
+        if (!context.session?.user.id) {
+          return null;
+        }
+        return context.prisma.toDo.findMany({
           where: { authorId: context.session?.user.id },
         });
       },

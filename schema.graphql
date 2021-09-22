@@ -5,6 +5,7 @@
 type Query {
   me: User
   todo: ToDo
+  todoList: [ToDo]
 }
 
 type ToDo {
