@@ -2,9 +2,10 @@ import { makeSchema, queryType } from "nexus";
 import { nexusPrisma } from "nexus-plugin-prisma";
 
 import * as userTypes from "./types/User";
+import * as toDoTypes from "./types/ToDo";
 import { join } from "path";
 export const schema = makeSchema({
-  types: [userTypes],
+  types: [userTypes, toDoTypes], 
   plugins: [nexusPrisma()],
 
   contextType: {
