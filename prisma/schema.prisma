@@ -47,6 +47,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  ToDo          ToDo[]
 }
 
 model VerificationToken {
@@ -55,4 +56,13 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model ToDo {
+  id       String  @id @default(cuid())
+  title    String
+  details  String
+  done     Boolean
+  authorId String
+  author   User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
 }
