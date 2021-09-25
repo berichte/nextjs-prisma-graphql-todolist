@@ -1,5 +1,6 @@
 import { objectType, mutationType, list } from "nexus";
 import {
+  booleanArg,
   extendType,
   nonNull,
   OutputScalarConfig,
@@ -59,9 +60,26 @@ export const Mutation = extendType({
         return ctx.prisma.toDo.create({
           data: {
             title: args.title,
-            details: args.details || '',
+            details: args.details || "",
             done: false,
             author: { connect: { id: ctx.session?.user.id } },
+          },
+        });
+      },
+    });
+    t.field("toggleToDo", {
+      type: ToDo,
+      authorize: hasSession,
+      args: {
+        id: nonNull(stringArg()),
+        done: nonNull(booleanArg()),
+      },
+      resolve: (_root, { id, done }, { prisma }) => {
+        console.log(`received request to toggle todo ${id} to ${done}.`);
+        return prisma.toDo.update({
+          where: { id },
+          data: {
+            done,
           },
         });
       },

@@ -43,5 +43,22 @@ const CREATE_TODO = gql`
 `;
 
 export const useCreateTodo = () => {
-  return useMutation<ToDo>(CREATE_TODO);
+  return useMutation<ToDo>(CREATE_TODO, {
+    refetchQueries: [TODO_LIST],
+  });
+};
+
+const TOGGLE_TODO = gql`
+  mutation toggleToDo($id: String!, $done: Boolean!) {
+    toggleToDo(id: $id, done: $done) {
+      id
+      done
+    }
+  } 
+`;
+
+export const useToggleToDo = () => {
+  return useMutation<ToDo>(TOGGLE_TODO, {
+    refetchQueries: [TODO_LIST],
+  });
 };

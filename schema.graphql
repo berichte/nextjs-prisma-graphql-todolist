@@ -4,6 +4,7 @@
 
 type Mutation {
   createToDo(details: String, title: String!): ToDo
+  toggleToDo(done: Boolean!, id: String!): ToDo
 }
 
 type Query {
