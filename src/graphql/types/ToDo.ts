@@ -1,4 +1,11 @@
-import { objectType, extendType, list } from "nexus";
+import { objectType, mutationType, list } from "nexus";
+import {
+  extendType,
+  nonNull,
+  OutputScalarConfig,
+  stringArg,
+} from "nexus/dist/core";
+import { Context } from "../context";
 
 export const ToDo = objectType({
   name: "ToDo",
@@ -11,28 +18,51 @@ export const ToDo = objectType({
   },
 });
 
+const hasSession = (_root: unknown, _args: unknown, ctx: Context) =>
+  !!ctx.session?.user.id;
+
 export const Query = extendType({
   type: "Query",
   definition(t) {
-    t.field("todo", {
+    t.field("toDo", {
       type: ToDo,
-      resolve(root, args, context) {
-        if (!context.session?.user.id) {
-          return null;
-        }
-        return context.prisma.toDo.findFirst({
-          where: { authorId: context.session?.user.id },
+      args: { id: stringArg() },
+      authorize: hasSession,
+      resolve: (_root, args, ctx) => {
+        if (!args.id) throw new Error('Missing parameter "id"');
+        return ctx.prisma.toDo.findFirst({ where: { id: args.id } });
+      },
+    });
+    t.field("toDos", {
+      type: list("ToDo"),
+      authorize: hasSession,
+      resolve(_root, _args, ctx) {
+        return ctx.prisma.toDo.findMany({
+          where: { authorId: ctx.session?.user.id },
         });
       },
     });
-    t.field("todoList", {
-      type: list("ToDo"),
-      resolve(root, args, context) {
-        if (!context.session?.user.id) {
-          return null;
-        }
-        return context.prisma.toDo.findMany({
-          where: { authorId: context.session?.user.id },
+  },
+});
+
+export const Mutation = extendType({
+  type: "Mutation",
+  definition(t) {
+    t.field("createToDo", {
+      type: ToDo,
+      authorize: hasSession,
+      args: {
+        title: nonNull(stringArg()),
+        details: stringArg(),
+      },
+      resolve: (_root, args, ctx) => {
+        return ctx.prisma.toDo.create({
+          data: {
+            title: args.title,
+            details: args.details || '',
+            done: false,
+            author: { connect: { id: ctx.session?.user.id } },
+          },
         });
       },
     });

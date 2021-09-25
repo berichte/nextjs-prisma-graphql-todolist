@@ -7,7 +7,7 @@
 // GraphQL query operation: ToDo
 // ====================================================
 
-export interface ToDo_todo {
+export interface ToDo_toDo {
   __typename: "ToDo";
   id: string;
   title: string;
@@ -15,5 +15,5 @@ export interface ToDo_todo {
 }
 
 export interface ToDo {
-  todo: ToDo_todo | null;
+  toDo: ToDo_toDo | null;
 }

@@ -8,10 +8,10 @@ const P = styled.p`
 
 export const ToDo: FC = () => {
   const { data } = useTodoList();
-  if (!data?.todoList?.length) return <p>no todo found!</p>;
+  if (!data?.toDos?.length) return <p>no todo found!</p>;
   return (
     <ol>
-      {data?.todoList.map((todo) => (
+      {data?.toDos.map((todo) => (
         <li key={todo?.id}>
           {todo?.title}, {todo?.done ? 'done': 'not done'}
         </li>

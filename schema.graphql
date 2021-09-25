@@ -2,10 +2,14 @@
 ### Do not make changes to this file directly
 
 
+type Mutation {
+  createToDo(details: String, title: String!): ToDo
+}
+
 type Query {
   me: User
-  todo: ToDo
-  todoList: [ToDo]
+  toDo(id: String): ToDo
+  toDos: [ToDo]
 }
 
 type ToDo {
