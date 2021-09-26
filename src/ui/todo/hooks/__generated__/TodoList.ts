@@ -11,10 +11,13 @@ export interface ToDoList_toDos {
   __typename: "ToDo";
   id: string;
   title: string;
-  details: string;
   done: boolean;
 }
 
 export interface ToDoList {
   toDos: (ToDoList_toDos | null)[] | null;
+}
+
+export interface ToDoListVariables {
+  toDoListId: string;
 }

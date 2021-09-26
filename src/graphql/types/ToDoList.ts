@@ -54,14 +54,17 @@ export const Mutation = extendType({
       args: {
         title: nonNull(stringArg()),
       },
-      resolve: (_root, { title }, { prisma, session }) =>
-        session?.user &&
-        prisma.toDoList.create({
-          data: {
-            title,
-            User: { connect: { id: session.user.id } },
-          },
-        }),
+      resolve: (_root, { title }, { prisma, session }) => {
+        console.log("mutation to create a new toDo list", title);
+        return session?.user
+          ? prisma.toDoList.create({
+              data: {
+                title,
+                User: { connect: { id: session.user.id } },
+              },
+            })
+          : null;
+      },
     });
 
     /**
@@ -75,14 +78,15 @@ export const Mutation = extendType({
         title: nonNull(stringArg()),
       },
       resolve: (_root, { id, title }, { prisma, session }) =>
-        session?.user && // won't be undefined (auth) but typing demands it.
-        prisma.toDoList.update({
-          where: { id },
-          data: {
-            title,
-            User: { connect: { id: session.user.id } },
-          },
-        }),
+        session?.user // won't be undefined (auth) but typing demands it.
+          ? prisma.toDoList.update({
+              where: { id },
+              data: {
+                title,
+                User: { connect: { id: session.user.id } },
+              },
+            })
+          : null,
     });
 
     /**

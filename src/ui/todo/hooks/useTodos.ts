@@ -1,4 +1,5 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
+import { TODO_LISTS } from "../../toDoList/hooks/useToDoList";
 import { ToDo } from "./__generated__/ToDo";
 import { ToDoList } from "./__generated__/ToDoList";
 
@@ -40,9 +41,12 @@ const CREATE_TODO = gql`
   }
 `;
 
-export const useCreateToDo = () => {
+export const useCreateToDo = (toDoListId: string) => {
   return useMutation<ToDo>(CREATE_TODO, {
-    refetchQueries: [TODO_LIST],
+    variables: {
+      toDoListId,
+    },
+    refetchQueries: [TODO_LISTS],
   });
 };
 
@@ -55,8 +59,22 @@ const TOGGLE_TODO = gql`
   }
 `;
 
-export const useToggleToDo = () => {
+export const useToggleToDo = (id: string) => {
   return useMutation<ToDo>(TOGGLE_TODO, {
-    refetchQueries: [TODO_LIST],
+    variables: {
+      id,
+    },
+    refetchQueries: [TODO_LISTS],
   });
 };
+
+const DELETE_TODO = gql`
+  mutation deleteToDo($id: String!) {
+    deleteToDo(id: $id) {
+      id
+    }
+  }
+`;
+
+export const useDeleteToDo = (id: string) =>
+  useMutation(DELETE_TODO, { variables: { id }, refetchQueries: [TODO_LISTS] });

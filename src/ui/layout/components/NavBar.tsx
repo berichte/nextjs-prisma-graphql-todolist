@@ -2,7 +2,6 @@ import { AppBar, Typography, Toolbar, Icon } from "@mui/material";
 import Ballot from "@mui/icons-material/Ballot";
 
 import { MyUserAvatar } from "../../user/components/MyUserAvatar";
-
 export const NavBar = () => (
   <AppBar position="static">
     <Toolbar

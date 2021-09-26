@@ -4,21 +4,23 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: createToDo
+// GraphQL query operation: ToDoLists
 // ====================================================
 
-export interface createToDo_createToDo {
+export interface ToDoLists_toDoLists_ToDo {
   __typename: "ToDo";
   id: string;
   title: string;
   done: boolean;
 }
 
-export interface createToDo {
-  createToDo: createToDo_createToDo | null;
+export interface ToDoLists_toDoLists {
+  __typename: "ToDoList";
+  id: string;
+  title: string;
+  ToDo: ToDoLists_toDoLists_ToDo[];
 }
 
-export interface createToDoVariables {
-  title: string;
-  toDoListId: string;
+export interface ToDoLists {
+  toDoLists: (ToDoLists_toDoLists | null)[] | null;
 }

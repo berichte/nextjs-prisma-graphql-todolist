@@ -17,3 +17,7 @@ export interface ToDo_toDo {
 export interface ToDo {
   toDo: ToDo_toDo | null;
 }
+
+export interface ToDoVariables {
+  id: string;
+}

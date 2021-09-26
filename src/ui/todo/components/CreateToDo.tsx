@@ -1,42 +1,45 @@
-import { Button } from "@mui/material";
-import { FC, useState } from "react";
-import styled from "styled-components";
+import { TextField } from "@mui/material";
+import { KeyboardEventHandler, useState } from "react";
 import { useCreateToDo } from "../";
 
-const P = styled.p`
-  font-size: 21;
-`;
+type CreateToDo = {
+  toDoListId: string;
+};
 
-export const CreateToDo: FC = () => {
-  const [createToDo, { data, error }] = useCreateToDo();
+export const CreateToDo = ({ toDoListId }: CreateToDo) => {
+  const [createToDo] = useCreateToDo(toDoListId);
   const [title, setTitle] = useState<string>("");
-  const [details, setDetails] = useState<string>("");
+
   const handleSubmit = async () => {
-    console.log("sending new toDo: ", title, details);
-    const result = await createToDo({
+    await createToDo({
       variables: {
         title,
-        details,
       },
     });
-    console.log("sent new toDo", result);
     setTitle("");
-    setDetails("");
+  };
+
+  const handleInput = (input: string) => {
+    setTitle(input);
+  };
+
+  const keyPress: KeyboardEventHandler<HTMLDivElement> = (e) => {
+    // hit enter
+    if (e.keyCode == 13) {
+      handleSubmit();
+    }
   };
   return (
-    <div>
-      <label>
-        New ToDo:
-        {JSON.stringify(data, undefined, 2)}
-        {JSON.stringify(error, undefined, 2)}
-        <input
-          type="text"
-          name="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </label>
-      <Button variant="contained">Add</Button>
-    </div>
+    <>
+      <TextField
+        style={{ width: "100%" }}
+        id="outlined-basic"
+        label="Add a new ToDo item"
+        variant="outlined"
+        value={title}
+        onChange={(e) => handleInput(e.target.value)}
+        onKeyDown={keyPress}
+      />
+    </>
   );
 };
