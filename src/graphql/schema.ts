@@ -1,11 +1,14 @@
-import { makeSchema, queryType } from "nexus";
+import { makeSchema, fieldAuthorizePlugin } from "nexus";
 import { nexusPrisma } from "nexus-plugin-prisma";
 
 import * as userTypes from "./types/User";
+import * as toDoTypes from "./types/ToDo";
+import * as toDoListTypes from "./types/ToDoList";
 import { join } from "path";
+
 export const schema = makeSchema({
-  types: [userTypes],
-  plugins: [nexusPrisma()],
+  types: [userTypes, toDoTypes, toDoListTypes],
+  plugins: [nexusPrisma({ experimentalCRUD: true }), fieldAuthorizePlugin()],
 
   contextType: {
     module: join(process.cwd(), "src", "graphql", "context.ts"),

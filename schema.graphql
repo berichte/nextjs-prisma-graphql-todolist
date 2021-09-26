@@ -2,8 +2,51 @@
 ### Do not make changes to this file directly
 
 
+type Mutation {
+  createToDo(title: String!, toDoListId: String!): ToDo
+  createToDoList(title: String!): ToDoList
+  deleteToDo(id: String!): ToDo
+  deleteToDoList(id: String!): ToDoList
+  toggleToDo(done: Boolean!, id: String!): ToDo
+  updateToDoList(id: String!, title: String!): ToDoList
+}
+
 type Query {
   me: User
+  toDo(id: String!): ToDo
+  toDoList(id: String!): ToDoList
+  toDoLists: [ToDoList]
+  toDos(toDoListId: String!): [ToDo]
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
+type ToDo {
+  done: Boolean!
+  id: String!
+  rank: Int!
+  title: String!
+  toDoListId: String
+}
+
+type ToDoList {
+  ToDo(after: ToDoWhereUniqueInput, before: ToDoWhereUniqueInput, first: Int, last: Int, orderBy: [ToDoListToDoOrderByInput!]): [ToDo!]!
+  User: User
+  id: String!
+  title: String!
+  userId: String
+}
+
+input ToDoListToDoOrderByInput {
+  done: SortOrder
+  rank: SortOrder
+}
+
+input ToDoWhereUniqueInput {
+  id: String
 }
 
 type User {

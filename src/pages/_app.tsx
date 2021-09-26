@@ -4,6 +4,8 @@ import type { AppProps } from "next/app";
 import React, { FC, useEffect } from "react";
 import "../styles/reset.css";
 import "../styles/main.css";
+import { ThemeProvider } from "@emotion/react";
+import { theme } from "./_theme";
 
 const apolloClient = new ApolloClient({
   uri: "/api/graphql",
@@ -26,8 +28,10 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
       <ApolloProvider client={apolloClient}>
-        <ClearClientCache apolloClient={apolloClient} />
-        <Component {...pageProps} />
+        <ThemeProvider theme={theme}>
+          <ClearClientCache apolloClient={apolloClient} />
+          <Component {...pageProps} />
+        </ThemeProvider>
       </ApolloProvider>
     </SessionProvider>
   );
