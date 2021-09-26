@@ -22,7 +22,7 @@ export const ToDoItem = ({ id, title, done }: ToDoItemProps) => {
   return (
     <ListItem>
       <Checkbox
-        value={done}
+        checked={done}
         onChange={() => toggleToDo({ variables: { done: !done } })}
         icon={<CheckCircleOutlineIcon />}
         checkedIcon={<RadioButtonUncheckedIcon />}
