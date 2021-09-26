@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import { FC, useState } from "react";
 import styled from "styled-components";
 import { useCreateToDo } from "../";
@@ -35,7 +36,7 @@ export const CreateToDo: FC = () => {
           onChange={(e) => setTitle(e.target.value)}
         />
       </label>
-      <button onClick={handleSubmit}>Add</button>
+      <Button variant="contained">Add</Button>
     </div>
   );
 };
