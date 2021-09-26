@@ -38,6 +38,7 @@ export const Query = extendType({
       resolve: (_root, _args, { prisma, session }) => {
         return prisma.toDoList.findMany({
           where: { userId: session?.user.id },
+          orderBy: { rank: "asc" },
         });
       },
     });

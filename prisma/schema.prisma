@@ -72,6 +72,6 @@ model ToDo {
   rank       Int       @default(autoincrement())
   title      String
   done       Boolean
-  ToDoList   ToDoList? @relation(fields: [toDoListId], references: [id])
+  ToDoList   ToDoList? @relation(fields: [toDoListId], references: [id], onDelete: Cascade)
   toDoListId String?
 }

@@ -32,7 +32,7 @@ export const CreateToDo = ({ toDoListId }: CreateToDo) => {
   return (
     <>
       <TextField
-        style={{ width: "100%" }}
+        fullWidth
         id="outlined-basic"
         label="Add a new ToDo item"
         variant="outlined"
