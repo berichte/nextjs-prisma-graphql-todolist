@@ -19,19 +19,30 @@ type Query {
   toDos(toDoListId: String!): [ToDo]
 }
 
+enum SortOrder {
+  asc
+  desc
+}
+
 type ToDo {
   done: Boolean!
   id: String!
+  rank: Int!
   title: String!
   toDoListId: String
 }
 
 type ToDoList {
-  ToDo(after: ToDoWhereUniqueInput, before: ToDoWhereUniqueInput, first: Int, last: Int): [ToDo!]!
+  ToDo(after: ToDoWhereUniqueInput, before: ToDoWhereUniqueInput, first: Int, last: Int, orderBy: [ToDoListToDoOrderByInput!]): [ToDo!]!
   User: User
   id: String!
   title: String!
   userId: String
+}
+
+input ToDoListToDoOrderByInput {
+  done: SortOrder
+  rank: SortOrder
 }
 
 input ToDoWhereUniqueInput {

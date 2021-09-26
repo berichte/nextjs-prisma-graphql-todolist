@@ -6,7 +6,9 @@ export const ToDoList = objectType({
   definition(t) {
     t.model.id();
     t.model.title();
-    t.model.ToDo();
+    t.model.ToDo({
+      ordering: { rank: true, done: true },
+    });
     t.model.userId();
     t.model.User();
   },

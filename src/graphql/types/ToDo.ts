@@ -9,6 +9,7 @@ export const ToDo = objectType({
     t.model.done();
     t.model.title();
     t.model.toDoListId();
+    t.model.rank();
   },
 });
 

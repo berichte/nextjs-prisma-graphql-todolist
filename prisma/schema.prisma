@@ -60,6 +60,7 @@ model VerificationToken {
 
 model ToDoList {
   id     String  @id @default(cuid())
+  rank   Int     @default(autoincrement())
   title  String
   ToDo   ToDo[]
   User   User?   @relation(fields: [userId], references: [id])
@@ -68,6 +69,7 @@ model ToDoList {
 
 model ToDo {
   id         String    @id @default(cuid())
+  rank       Int       @default(autoincrement())
   title      String
   done       Boolean
   ToDoList   ToDoList? @relation(fields: [toDoListId], references: [id])
