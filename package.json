@@ -14,6 +14,7 @@
     "@apollo/client": "^3.4.10",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
+    "@mui/icons-material": "^5.0.1",
     "@mui/material": "^5.0.1",
     "@next-auth/prisma-adapter": "0.5.2-next.5",
     "@prisma/client": "^3.0.1",

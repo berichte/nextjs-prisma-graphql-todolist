@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import { signIn, signOut } from "next-auth/react";
 import React from "react";
 import Heading from "../ui/layout/components/Heading";
+import { NavBar } from "../ui/layout/components/Navbar";
 import PageLayout from "../ui/layout/components/PageLayout";
 import { CreateToDo } from "../ui/toDo/components/CreateToDo";
 import { ToDo } from "../ui/toDo/components/ToDo";
@@ -13,15 +14,8 @@ const Home: NextPage = () => {
 
   return (
     <PageLayout>
-      <Heading>Starter Project</Heading>
       {me ? (
-        <div>
-          <p>hello {me.email}</p>
-          <MyUserAvatar />
-          <button onClick={() => signOut({ redirect: false })}>Signout </button>
-          <CreateToDo />
-          <ToDo />
-        </div>
+        <NavBar />
       ) : (
         <button onClick={() => signIn("google")}>Sign in with Google</button>
       )}
