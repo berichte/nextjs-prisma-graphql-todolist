@@ -1,6 +1,6 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { ToDo } from "./__generated__/ToDo";
-import { TodoList } from "./__generated__/TodoList";
+import { ToDoList } from "./__generated__/ToDoList";
 
 const TODO = gql`
   query ToDo {
@@ -17,7 +17,7 @@ export const useTodo = () => {
 };
 
 const TODO_LIST = gql`
-  query TodoList {
+  query ToDoList {
     toDos {
       id
       title
@@ -27,8 +27,8 @@ const TODO_LIST = gql`
   }
 `;
 
-export const useTodoList = () => {
-  return useQuery<TodoList>(TODO_LIST);
+export const useToDoList = () => {
+  return useQuery<ToDoList>(TODO_LIST);
 };
 
 const CREATE_TODO = gql`
@@ -42,7 +42,7 @@ const CREATE_TODO = gql`
   }
 `;
 
-export const useCreateTodo = () => {
+export const useCreateToDo = () => {
   return useMutation<ToDo>(CREATE_TODO, {
     refetchQueries: [TODO_LIST],
   });

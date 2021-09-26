@@ -1,13 +1,13 @@
 import { FC, MouseEventHandler } from "react";
 import styled from "styled-components";
-import { useTodoList, useToggleToDo } from "../hooks/useTodos";
+import { useToDoList, useToggleToDo } from "../";
 
 const P = styled.p`
   font-size: 21;
 `;
 
 export const ToDo: FC = () => {
-  const { data } = useTodoList();
+  const { data } = useToDoList();
   const [toggleToDo] = useToggleToDo();
   const handleToggle =
     (id?: string, done?: boolean): MouseEventHandler =>
@@ -15,12 +15,12 @@ export const ToDo: FC = () => {
       event.preventDefault();
       toggleToDo({ variables: { id, done: !done } });
     };
-  if (!data?.toDos?.length) return <p>no todo found!</p>;
+  if (!data?.toDos?.length) return <p>no toDo found!</p>;
   return (
     <ol>
-      {data?.toDos.map((todo) => (
-        <li key={todo?.id} onClick={handleToggle(todo?.id, todo?.done)}>
-          {todo?.title}, {todo?.done ? "done" : "not done"}
+      {data?.toDos.map((toDo) => (
+        <li key={toDo?.id} onClick={handleToggle(toDo?.id, toDo?.done)}>
+          {toDo?.title}, {toDo?.done ? "done" : "not done"}
         </li>
       ))}
     </ol>

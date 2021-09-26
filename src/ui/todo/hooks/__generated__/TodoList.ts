@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: TodoList
+// GraphQL query operation: ToDoList
 // ====================================================
 
-export interface TodoList_toDos {
+export interface ToDoList_toDos {
   __typename: "ToDo";
   id: string;
   title: string;
@@ -15,6 +15,6 @@ export interface TodoList_toDos {
   done: boolean;
 }
 
-export interface TodoList {
-  toDos: (TodoList_toDos | null)[] | null;
+export interface ToDoList {
+  toDos: (ToDoList_toDos | null)[] | null;
 }

@@ -1,32 +1,31 @@
-import { FC, useContext, useState } from "react";
+import { FC, useState } from "react";
 import styled from "styled-components";
-import { useMe } from "../../user/hooks/useMe";
-import { useCreateTodo } from "../hooks/useTodos";
+import { useCreateToDo } from "../";
 
 const P = styled.p`
   font-size: 21;
 `;
 
 export const CreateToDo: FC = () => {
-  const [createTodo, { data, error }] = useCreateTodo();
+  const [createToDo, { data, error }] = useCreateToDo();
   const [title, setTitle] = useState<string>("");
   const [details, setDetails] = useState<string>("");
   const handleSubmit = async () => {
-    console.log("sending new todo: ", title, details);
-    const result = await createTodo({
+    console.log("sending new toDo: ", title, details);
+    const result = await createToDo({
       variables: {
         title,
         details,
       },
     });
-    console.log("sent new todo", result);
+    console.log("sent new toDo", result);
     setTitle("");
     setDetails("");
   };
   return (
     <div>
       <label>
-        New Todo:
+        New ToDo:
         {JSON.stringify(data, undefined, 2)}
         {JSON.stringify(error, undefined, 2)}
         <input

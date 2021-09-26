@@ -3,8 +3,8 @@ import { signIn, signOut } from "next-auth/react";
 import React from "react";
 import Heading from "../ui/layout/components/Heading";
 import PageLayout from "../ui/layout/components/PageLayout";
-import { CreateToDo } from "../ui/todo/components/CreateToDo";
-import { ToDo } from "../ui/todo/components/ToDo";
+import { CreateToDo } from "../ui/toDo/components/CreateToDo";
+import { ToDo } from "../ui/toDo/components/ToDo";
 import MyUserAvatar from "../ui/user/components/MyUserAvatar";
 import { useMe } from "../ui/user/hooks/useMe";
 
