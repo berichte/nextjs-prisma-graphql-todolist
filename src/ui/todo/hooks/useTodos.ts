@@ -1,5 +1,5 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { TODO_LISTS } from "../../toDoList/hooks/useToDoList";
+import { TODO_LISTS } from "../../toDoList";
 import { ToDo } from "./__generated__/ToDo";
 import { ToDoList } from "./__generated__/ToDoList";
 

@@ -17,7 +17,7 @@ import {
 import DeleteOutline from "@mui/icons-material/DeleteOutline";
 
 import { ToDoItem, CreateToDo } from "../../toDo/components";
-import { useDeleteToDoList, useUpdateToDoList } from "../hooks/useToDoList";
+import { useDeleteToDoList, useUpdateToDoList } from "../";
 import { ToDoLists_toDoLists_ToDo } from "../hooks/__generated__/ToDoLists";
 
 type ToDoListParams = {

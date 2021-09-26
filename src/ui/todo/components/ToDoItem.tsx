@@ -1,5 +1,6 @@
 import {
   Checkbox,
+  IconButton,
   ListItem,
   ListItemSecondaryAction,
   ListItemText,
@@ -22,14 +23,16 @@ export const ToDoItem = ({ id, title, done }: ToDoItemProps) => {
   return (
     <ListItem>
       <Checkbox
-        checked={done}
+        checked={!done}
         onChange={() => toggleToDo({ variables: { done: !done } })}
         icon={<CheckCircleOutlineIcon />}
         checkedIcon={<RadioButtonUncheckedIcon />}
       />
       <ListItemText primary={title} />
       <ListItemSecondaryAction>
-        <DeleteOutlineIcon onClick={() => deleteToDo()} />
+        <IconButton onClick={() => deleteToDo()}>
+          <DeleteOutlineIcon />
+        </IconButton>
       </ListItemSecondaryAction>
     </ListItem>
   );

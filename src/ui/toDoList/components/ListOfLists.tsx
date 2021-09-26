@@ -1,4 +1,4 @@
-import { useToDoLists } from "../hooks/useToDoList";
+import { useToDoLists } from "../";
 import { AddToDoListBtn } from "./AddToDoListBtn";
 import { ToDoList } from "./ToDoList";
 

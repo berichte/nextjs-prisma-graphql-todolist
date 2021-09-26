@@ -3,7 +3,7 @@ import AddIcon from "@mui/icons-material/Add";
 import styled from "styled-components";
 import Chance from "chance";
 
-import { useAddToDoList } from "../hooks/useToDoList";
+import { useAddToDoList } from "../";
 
 const chance = new Chance();
 
