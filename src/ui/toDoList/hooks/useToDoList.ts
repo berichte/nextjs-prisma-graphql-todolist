@@ -6,7 +6,7 @@ export const TODO_LISTS = gql`
     toDoLists {
       id
       title
-      ToDo(orderBy: { done: desc }) {
+      ToDo(orderBy: { done: asc }) {
         id
         title
         done
