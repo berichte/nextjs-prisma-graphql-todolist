@@ -1,72 +1,72 @@
-import { objectType, mutationType, list } from "nexus";
-import {
-  booleanArg,
-  extendType,
-  nonNull,
-  OutputScalarConfig,
-  stringArg,
-} from "nexus/dist/core";
-import { Context } from "../context";
+import { objectType, list } from "nexus";
+import { booleanArg, extendType, nonNull, stringArg } from "nexus/dist/core";
+import { hasSession } from "./auth";
 
 export const ToDo = objectType({
   name: "ToDo",
   definition(t) {
     t.model.id();
-    t.model.author();
-    t.model.details();
     t.model.done();
     t.model.title();
+    t.model.toDoListId();
   },
 });
 
-const hasSession = (_root: unknown, _args: unknown, ctx: Context) =>
-  !!ctx.session?.user.id;
-
 export const Query = extendType({
   type: "Query",
-  definition(t) {
+  definition: (t) => {
+    /**
+     * Query for a single ToDo by id
+     */
     t.field("toDo", {
       type: ToDo,
-      args: { id: stringArg() },
+      args: { id: nonNull(stringArg()) },
       authorize: hasSession,
-      resolve: (_root, args, ctx) => {
-        if (!args.id) throw new Error('Missing parameter "id"');
-        return ctx.prisma.toDo.findFirst({ where: { id: args.id } });
-      },
+      resolve: (_root, { id }, { prisma }) =>
+        prisma.toDo.findFirst({ where: { id } }),
     });
+
+    /**
+     * Query for all ToDos of a ToDoList
+     */
     t.field("toDos", {
       type: list("ToDo"),
+      args: { toDoListId: nonNull(stringArg()) },
       authorize: hasSession,
-      resolve(_root, _args, ctx) {
-        return ctx.prisma.toDo.findMany({
-          where: { authorId: ctx.session?.user.id },
-        });
-      },
+      resolve: (_root, { toDoListId }, { prisma }) =>
+        prisma.toDo.findMany({
+          where: { toDoListId },
+        }),
     });
   },
 });
 
 export const Mutation = extendType({
   type: "Mutation",
-  definition(t) {
+  definition: (t) => {
+    /**
+     * Create a ToDo item
+     */
     t.field("createToDo", {
       type: ToDo,
       authorize: hasSession,
       args: {
         title: nonNull(stringArg()),
-        details: stringArg(),
+        toDoListId: nonNull(stringArg()),
       },
-      resolve: (_root, args, ctx) => {
-        return ctx.prisma.toDo.create({
+      resolve: (_root, { title, toDoListId }, { prisma }) =>
+        prisma.toDo.create({
           data: {
-            title: args.title,
-            details: args.details || "",
+            title,
             done: false,
-            author: { connect: { id: ctx.session?.user.id } },
+            ToDoList: { connect: { id: toDoListId } },
           },
-        });
-      },
+        }),
     });
+
+    /**
+     * Toggle a ToDo from undone to done or vis versa.
+     */
     t.field("toggleToDo", {
       type: ToDo,
       authorize: hasSession,
@@ -74,15 +74,26 @@ export const Mutation = extendType({
         id: nonNull(stringArg()),
         done: nonNull(booleanArg()),
       },
-      resolve: (_root, { id, done }, { prisma }) => {
-        console.log(`received request to toggle todo ${id} to ${done}.`);
-        return prisma.toDo.update({
+      resolve: (_root, { id, done }, { prisma }) =>
+        prisma.toDo.update({
           where: { id },
           data: {
             done,
           },
-        });
+        }),
+    });
+
+    /**
+     * Delete a ToDo item
+     */
+    t.field("deleteToDo", {
+      type: ToDo,
+      authorize: hasSession,
+      args: {
+        id: nonNull(stringArg()),
       },
+      resolve: (_root, { id }, { prisma }) =>
+        prisma.toDo.delete({ where: { id } }),
     });
   },
 });

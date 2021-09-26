@@ -3,8 +3,8 @@ import { ToDo } from "./__generated__/ToDo";
 import { ToDoList } from "./__generated__/ToDoList";
 
 const TODO = gql`
-  query ToDo {
-    toDo {
+  query ToDo($id: String!) {
+    toDo(id: $id) {
       id
       title
       done
@@ -17,11 +17,10 @@ export const useTodo = () => {
 };
 
 const TODO_LIST = gql`
-  query ToDoList {
-    toDos {
+  query ToDoList($toDoListId: String!) {
+    toDos(toDoListId: $toDoListId) {
       id
       title
-      details
       done
     }
   }
@@ -32,11 +31,10 @@ export const useToDoList = () => {
 };
 
 const CREATE_TODO = gql`
-  mutation createToDo($title: String!, $details: String!) {
-    createToDo(title: $title, details: $details) {
+  mutation createToDo($title: String!, $toDoListId: String!) {
+    createToDo(title: $title, toDoListId: $toDoListId) {
       id
       title
-      details
       done
     }
   }
@@ -54,7 +52,7 @@ const TOGGLE_TODO = gql`
       id
       done
     }
-  } 
+  }
 `;
 
 export const useToggleToDo = () => {

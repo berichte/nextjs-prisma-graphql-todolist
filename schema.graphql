@@ -3,22 +3,22 @@
 
 
 type Mutation {
-  createToDo(details: String, title: String!): ToDo
+  createToDo(title: String!, toDoListId: String!): ToDo
+  deleteToDo(id: String!): ToDo
   toggleToDo(done: Boolean!, id: String!): ToDo
 }
 
 type Query {
   me: User
-  toDo(id: String): ToDo
-  toDos: [ToDo]
+  toDo(id: String!): ToDo
+  toDos(toDoListId: String!): [ToDo]
 }
 
 type ToDo {
-  author: User!
-  details: String!
   done: Boolean!
   id: String!
   title: String!
+  toDoListId: String
 }
 
 type User {
